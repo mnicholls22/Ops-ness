@@ -1,0 +1,19 @@
+[class*="col-"] {
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.bg-blue {
+    background-color: #e1f5fe;
+}
+
+
+/* Media queries - Responsive timeline on screens less than 800px wide */
+@media screen and (max-width: 800px) {
+
+  .bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+}
