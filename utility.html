@@ -26,6 +26,7 @@
             var rows = data.split("\n");
 
             var table = '';
+            var count = 0;
             for(var y in rows) {
                 var cells = rows[y].split("\t");
                 var row = '';
@@ -47,14 +48,17 @@
                         if (source=="Phone"){
                             row = row + cells[x]; 
                         }
+                        count = count + 1;
                     }             
                 }
                 table = table + row;
             }
             console.log(table);
+            console.log(count);
 
             // Insert into DOM
              $('#output_table').val(table);
+             $('#outputSummary').val(count + " rows processed");
         }
 
         function copyOutput() {
@@ -114,6 +118,7 @@
                     <input type="radio" id="Phone" name="optionType" value="Phone" onclick="javascript:generateOutput('Phone')">  <label for="Phone"> Phone </label>
                     <input type="radio" id="County" name="optionType" value="County" onclick="javascript:generateOutput('County')">  <label for="County"> County </label>
                     <input type="radio" id="CountyLA" name="optionType" value="CountyLA" onclick="javascript:generateOutput('CountyLA')">  <label for="CountyLA"> County (LA) </label><br>
+                    <input type="text" id="outputSummary" value="Summary will post here" disabled></p>
                 </p>
             </div>
             <div class="col-sm-6">
