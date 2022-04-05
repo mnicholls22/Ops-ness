@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ops-ness is the mindset by which someone approaches a process or problem, with an eye for optimization and collaboration.">
+    <meta property="og:site_name" content="Ops-ness" />
+    <meta property="og:title" content="Ops-ness utility tools" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.ops-ness.com/utility.html" />
+    <meta property="og:description" content="Utilities for excel conversion" />
+    <meta property="og:locale" content="en_US" />
+   
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    <!-- borrowed from this jfiddle! http://jsfiddle.net/duwood/sTX7y/    -->
+    <script>
+        function generateOutput(source) {
+            var data = $('textarea[name=excel_input]').val();
+            console.log(data);
+            var rows = data.split("\n");
+
+            var table = '';
+            for(var y in rows) {
+                var cells = rows[y].split("\t");
+                var row = '';
+                for(var x in cells) {
+                    console.log(cells[x]);
+                    if (cells[x] != ""){
+                        if(y>0){
+                            row = ",";
+                        }
+                        if(source=="RefID" || source=="ZIP") {
+                            row = row + "'" + cells[x] + "' ";
+                        }
+                        if (source=="County"){
+                            row = row + "'" + cells[x] + " County' "; 
+                        }
+                        if (source=="CountyLA"){
+                            row = row + "'" + cells[x] + " Parish' "; 
+                        }
+                        if (source=="Phone"){
+                            row = row + cells[x]; 
+                        }
+                    }             
+                }
+                table = table + row;
+            }
+            console.log(table);
+
+            // Insert into DOM
+             $('#output_table').val(table);
+        }
+
+        function copyOutput() {
+            /* Get the text field */
+            var copyText = document.getElementById("output_table");
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(copyText.value);
+
+            /* Alert the copied text */
+            alert("Copied output to clipbard");
+        }
+    
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ1D647YHN"></script>
+	<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FZ1D647YHN');
+	</script>
+
+    <link href="css/styles.css" rel="stylesheet">
+    <title>Ops-ness Excel utility</title>
+    <link href="https://www.ops-ness.com/favicon.ico?raw=true" rel="shortcut icon">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="https://collaborate.wellpoint.com/sites/msteams_0250d9/SitePages/Ops-About%20us.aspx">About us</a>
+                <li class="nav-item"><a class="nav-link" href="https://collaborate.wellpoint.com/sites/msteams_0250d9/SitePages/Ops-Processes.aspx">Processes</a>
+                <li class="nav-item"><a class="nav-link" href="https://collaborate.wellpoint.com/sites/msteams_0250d9/SitePages/Ops-Automations.aspx">Automations</a>
+                <li class="nav-item"><a class="nav-link" href="https://collaborate.wellpoint.com/sites/msteams_0250d9/SitePages/Ops-Team.aspx">Team</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid text-left p-5">
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="text-muted">
+                    Paste excel data here:<br>
+
+                    <textarea name="excel_input" style="width:400px;height:500px;"></textarea><br>
+                    <input type="radio" id="RefID" name="optionType" value="RefID" onclick="javascript:generateOutput('RefID')"> <label for="RefID"> RefID </label>
+                    <input type="radio" id="ZIP" name="optionType" value="ZipCode" onclick="javascript:generateOutput('ZIP')">  <label for="ZIP"> ZIP Code </label>
+                    <input type="radio" id="Phone" name="optionType" value="Phone" onclick="javascript:generateOutput('Phone')">  <label for="Phone"> Phone </label>
+                    <input type="radio" id="County" name="optionType" value="County" onclick="javascript:generateOutput('County')">  <label for="County"> County </label>
+                    <input type="radio" id="CountyLA" name="optionType" value="CountyLA" onclick="javascript:generateOutput('CountyLA')">  <label for="CountyLA"> County (LA) </label><br>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <p class="text-muted">
+                    Output will go here.<br>
+                <textarea id="output_table" style="width:400px;height:500px;"></textarea><br>
+                <button onclick="copyOutput()">Copy to clipboard</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
