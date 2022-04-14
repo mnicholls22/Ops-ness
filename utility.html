@@ -34,14 +34,14 @@
                     console.log(cells[x]);
                     if (cells[x] != ""){
                         row = "";
-                        if(source=="RefID" || source=="ZIP") {
-                            row = row + "'" + cells[x] + "' ";
+                        if(source=="RefID" || source=="ZIP" || source=="List1") {
+                            row = row + "'" + cells[x].toUpperCase() + "' ";
                         }
                         if (source=="County"){
-                            row = row + "'" + cells[x] + " County' "; 
+                            row = row + "'" + cells[x].toUpperCase() + " COUNTY' "; 
                         }
                         if (source=="CountyLA"){
-                            row = row + "'" + cells[x] + " Parish' "; 
+                            row = row + "'" + cells[x].toUpperCase() + " PARISH' "; 
                         }
                         if (source=="Phone"){
                             row = row + cells[x]; 
@@ -118,7 +118,8 @@
                     <input type="radio" id="ZIP" name="optionType" value="ZipCode" onclick="javascript:generateOutput('ZIP')">  <label for="ZIP"> ZIP Code </label>
                     <input type="radio" id="Phone" name="optionType" value="Phone" onclick="javascript:generateOutput('Phone')">  <label for="Phone"> Phone </label>
                     <input type="radio" id="County" name="optionType" value="County" onclick="javascript:generateOutput('County')">  <label for="County"> County </label>
-                    <input type="radio" id="CountyLA" name="optionType" value="CountyLA" onclick="javascript:generateOutput('CountyLA')">  <label for="CountyLA"> County (LA) </label><br>
+                    <input type="radio" id="CountyLA" name="optionType" value="CountyLA" onclick="javascript:generateOutput('CountyLA')">  <label for="CountyLA"> County (LA) </label>
+                    <input type="radio" id="List1" name="optionType" value="List1" onclick="javascript:generateOutput('List1')">  <label for="List1"> List </label><br>
                     <input type="text" id="outputSummary" value="Summary will post here" disabled></p>
                 </p>
             </div>
