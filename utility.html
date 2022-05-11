@@ -22,11 +22,27 @@
     <script>
         function generateOutput(source) {
             var data = $('textarea[name=excel_input]').val();
-            console.log(data);
-            var rows = data.split("\n");
+            var rows = data.split("\n"); 
 
-            var table = '';
+            var table = ''; 
             var count = 0;
+            if (document.getElementById('SQL').checked) {
+                if(source=="RefID"){
+                    table = table + '"Segmentation - Promotion History"."Reference Number"."Reference Number" IN (';
+                    } 
+                if(source=="County" || source=="CountyLA"){
+                    table = table + '"Prospect Geography"."FIPS County" IN (';
+                    } 
+                if(source=="Phone"){
+                    table = table + '(';
+                    } 
+                if(source=="ZIP"){
+                    table = table + '"Prospect Geography"."Zip Code" IN (';
+                    } 
+                if(source=="List1"){
+                    table = table + '"Segmentation - Purchased Prospects"."List"."List Vendor Name" IN (';
+                    } 
+                }
             for(var y in rows) {
                 var cells = rows[y].split("\t");
                 var row = '';
@@ -35,16 +51,16 @@
                     if (cells[x] != ""){
                         row = "";
                         if(source=="RefID" || source=="ZIP" || source=="List1") {
-                            row = row + "'" + cells[x].toUpperCase() + "' ";
+                            row = row + "'" + cells[x].trim().toUpperCase() + "' ";
                         }
                         if (source=="County"){
-                            row = row + "'" + cells[x].toUpperCase() + " COUNTY' "; 
+                            row = row + "'" + cells[x].trim().toUpperCase() + " COUNTY' "; 
                         }
                         if (source=="CountyLA"){
-                            row = row + "'" + cells[x].toUpperCase() + " PARISH' "; 
+                            row = row + "'" + cells[x].trim().toUpperCase() + " PARISH' "; 
                         }
                         if (source=="Phone"){
-                            row = row + cells[x]; 
+                            row = row + cells[x].trim(); 
                         }
                         row = row + ", ";
                         count = count + 1;
@@ -52,14 +68,18 @@
                 }
                 table = table + row;
             }
-
+            // Remove last comma from the record set. If SQL, add last character
+            table = table.slice(0,-2)
+            if (document.getElementById('SQL').checked) {
+                table = table + ')';
+                }
 
             console.log(table);
             console.log(count);
 
-            // Insert into DOM. Remove last comma from the record set.
-             $('#output_table').val(table.slice(0,-2));
-             $('#outputSummary').val(count + " rows processed");
+            // Insert into DOM. 
+            $('#output_table').val(table);
+            $('#outputSummary').val(count + " rows processed");
         }
 
         function copyOutput() {
@@ -120,6 +140,7 @@
                     <input type="radio" id="County" name="optionType" value="County" onclick="javascript:generateOutput('County')">  <label for="County"> County </label>
                     <input type="radio" id="CountyLA" name="optionType" value="CountyLA" onclick="javascript:generateOutput('CountyLA')">  <label for="CountyLA"> County (LA) </label>
                     <input type="radio" id="List1" name="optionType" value="List1" onclick="javascript:generateOutput('List1')">  <label for="List1"> List </label><br>
+                    <input type="checkbox" id="SQL" name="optionType" value="SQL">  <label for="SQL"> Full SQL statement </label><br>
                     <input type="text" id="outputSummary" value="Summary will post here" disabled></p>
                 </p>
             </div>
@@ -127,6 +148,7 @@
                 <p class="text-muted">
                     Output will go here.<br>
                 <textarea id="output_table" style="width:400px;height:500px;"></textarea><br>
+
                 <button onclick="copyOutput()">Copy to clipboard</button>
             </div>
         </div>
