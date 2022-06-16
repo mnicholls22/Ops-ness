@@ -54,7 +54,7 @@
                             row = row + "'" + cells[x].trim().toUpperCase() + "' ";
                         }
                         if (source=="County"){
-                            row = row + "'" + cells[x].trim().toUpperCase() + " COUNTY' "; 
+                            row = row + countyAppend(cells[x].trim().toUpperCase()); 
                         }
                         if (source=="CountyLA"){
                             row = row + "'" + cells[x].trim().toUpperCase() + " PARISH' "; 
@@ -80,6 +80,19 @@
             // Insert into DOM. 
             $('#output_table').val(table);
             $('#outputSummary').val(count + " rows processed");
+        }
+
+        function countyAppend(countyName) {
+            //input single county name. If in wierd list, then we return value back. Otherwise, we append COUNTY to the end
+            const weirdCountyList = ['ST. LOUIS CITY' , 'CARSON CITY' , 'ALEXANDRIA CITY' , 'BEDFORD CITY' , 'BRISTOL CITY' , 'BUENA VISTA CITY' , 'CHARLES CITY COUNTY' , 'CHARLOTTESVILLE CITY' , 'CHESAPEAKE CITY' , 'COLONIAL HEIGHTS CITY' , 'COVINGTON CITY' , 'DANVILLE CITY' , 'EMPORIA CITY' , 'FAIRFAX CITY' , 'FALLS CHURCH CITY' , 'FRANKLIN CITY' , 'FREDERICKSBURG CITY' , 'GALAX CITY' , 'HAMPTON CITY' , 'HARRISONBURG CITY' , 'HOPEWELL CITY' , 'JAMES CITY COUNTY' , 'LEXINGTON CITY' , 'LYNCHBURG CITY' , 'MANASSAS CITY' , 'MANASSAS PARK CITY' , 'MARTINSVILLE CITY' , 'NEWPORT NEWS CITY' , 'NORFOLK CITY' , 'NORTON CITY' , 'PETERSBURG CITY' , 'POQUOSON CITY' , 'PORTSMOUTH CITY' , 'RADFORD CITY' , 'RICHMOND CITY' , 'ROANOKE CITY' , 'SALEM CITY' , 'STAUNTON CITY' , 'SUFFOLK CITY' , 'VIRGINIA BEACH CITY' , 'WAYNESBORO CITY' , 'WILLIAMSBURG CITY' , 'WINCHESTER CITY'];
+
+            if (weirdCountyList.indexOf(countyName) > -1) {
+                return "'" + countyName + "' "
+                }
+            else {
+                return "'" + countyName + " COUNTY' "
+            }
+
         }
 
         function copyOutput() {
