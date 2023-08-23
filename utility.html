@@ -51,25 +51,25 @@
                     if (cells[x] != ""){
                         row = "";
                         if(source=="RefID" || source=="ZIP" || source=="List1") {
-                            row = row + "'" + cells[x].trim().toUpperCase() + "' ";
+                            row = row + "'" + cells[x].trim().toUpperCase() + "'";
                         }
                         if (source=="County"){
                             row = row + countyAppend(cells[x].trim().toUpperCase()); 
                         }
                         if (source=="CountyLA"){
-                            row = row + "'" + cells[x].trim().toUpperCase() + " PARISH' "; 
+                            row = row + "'" + cells[x].trim().toUpperCase() + " PARISH'"; 
                         }
                         if (source=="Phone"){
                             row = row + cells[x].trim(); 
                         }
-                        row = row + ", ";
+                        row = row + ",";
                         count = count + 1;
                     }             
                 }
                 table = table + row;
             }
             // Remove last comma from the record set. If SQL, add last character
-            table = table.slice(0,-2)
+            table = table.slice(0,-1)
             if (document.getElementById('SQL').checked) {
                 table = table + ')';
                 }
